@@ -89,3 +89,5 @@ lint/tmp/
 /.idea/navEditor.xml
 /.idea/
 # lint/reports/
+
+app/src/main/java/com/ortudev/sportsResults/data/server/ServerConfig.kt
