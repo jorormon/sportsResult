@@ -26,10 +26,7 @@ class MainViewModel(private val repository: F1Repository):ViewModel() {
     fun onReloadCircuits(){
         viewModelScope.launch{
             _refreshing.value = true
-            _circuits.value = withContext(Dispatchers.IO){
-                val x = GetCircuits(repository).invoke()
-                x
-            }
+            _circuits.value = withContext(Dispatchers.IO){ GetCircuits(repository).invoke() }
             _refreshing.value = false
         }
     }

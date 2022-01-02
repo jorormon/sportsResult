@@ -19,17 +19,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        supportActionBar?.title = "Circuits"
         with(binding){
-            val linearLayoutManager = LinearLayoutManager(this@MainActivity)
-            recycler.layoutManager = linearLayoutManager
+            recycler.layoutManager = LinearLayoutManager(this@MainActivity)
             recycler.adapter = adapter
-
 
             mainViewModel.circuits.observe(this@MainActivity,{ list ->
                 list?.let{it ->adapter.items = it}
             })
-
             mainViewModel.refreshing.observe(this@MainActivity,{ refreshing ->
                 reload.isRefreshing = refreshing
             })

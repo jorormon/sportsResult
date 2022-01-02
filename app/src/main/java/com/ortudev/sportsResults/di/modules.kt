@@ -1,11 +1,11 @@
-package com.ortudev.sportsResults
+package com.ortudev.sportsResults.di
 
 import android.content.Context
 import com.ortudev.sportsResults.data.db.F1Database
 import com.ortudev.sportsResults.data.db.LocalDataSource
 import com.ortudev.sportsResults.data.db.RoomDataSource
 import com.ortudev.sportsResults.data.domain.F1Repository
-import com.ortudev.sportsResults.data.server.F1Api
+import com.ortudev.sportsResults.data.server.api.F1Api
 import com.ortudev.sportsResults.data.server.RemoteClient
 import com.ortudev.sportsResults.data.server.RemoteDataSource
 import com.ortudev.sportsResults.data.server.ServerDataSource
@@ -21,13 +21,13 @@ val repositoryModule = module{
     single { provideLocalDataSource(get()) }
     single { provideRemoteDataSource(get()) }
     single { provideLocalDatabase(get()) }
-    single { provideF1API()}
+    single { provideF1API() }
 }
 val viewModelModule = module {
     viewModel { MainViewModel(get()) }
 }
 
-fun provideRemoteDataSource(f1Api:F1Api):RemoteDataSource{
+fun provideRemoteDataSource(f1Api: F1Api):RemoteDataSource{
     return ServerDataSource(f1Api)
 }
 fun provideLocalDataSource(db:F1Database):LocalDataSource{

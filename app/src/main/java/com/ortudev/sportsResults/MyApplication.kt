@@ -1,6 +1,8 @@
 package com.ortudev.sportsResults
 
 import android.app.Application
+import com.ortudev.sportsResults.di.repositoryModule
+import com.ortudev.sportsResults.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

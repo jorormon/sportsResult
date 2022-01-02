@@ -6,9 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.ortudev.sportsResults.data.db.entities.CircuitEntity
 import com.ortudev.sportsResults.data.db.entities.DriverEntity
+import com.ortudev.sportsResults.data.db.entities.LocationEntity
 
 @Database(
-    entities = [CircuitEntity::class,DriverEntity::class],
+    entities = [CircuitEntity::class,DriverEntity::class,LocationEntity::class],
     version = 1,
     exportSchema = false
 )

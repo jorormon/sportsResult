@@ -1,4 +1,4 @@
-package com.ortudev.sportsResults.data.server
+package com.ortudev.sportsResults.data.server.responses
 
 data class BaseResponse<out T>(
 
