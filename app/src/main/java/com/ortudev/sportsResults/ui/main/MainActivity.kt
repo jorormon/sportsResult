@@ -1,16 +1,18 @@
-package com.ortudev.sportsResults.ui
+package com.ortudev.sportsResults.ui.main
 
 import android.os.Bundle
-import android.view.View
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ortudev.sportsResults.R
 import com.ortudev.sportsResults.databinding.ActivityMainBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val mainViewModel:MainViewModel by viewModel()
+    private val viewModel: MainViewModel by viewModel()
     private val adapter: CircuitsAdapter by lazy {
         CircuitsAdapter()
     }
@@ -24,15 +26,30 @@ class MainActivity : AppCompatActivity() {
             recycler.layoutManager = LinearLayoutManager(this@MainActivity)
             recycler.adapter = adapter
 
-            mainViewModel.circuits.observe(this@MainActivity,{ list ->
+            viewModel.circuits.observe(this@MainActivity,{ list ->
                 list?.let{it ->adapter.items = it}
             })
-            mainViewModel.refreshing.observe(this@MainActivity,{ refreshing ->
+            viewModel.refreshing.observe(this@MainActivity,{ refreshing ->
                 reload.isRefreshing = refreshing
             })
             reload.setOnRefreshListener {
-                mainViewModel.onReloadCircuits()
+                viewModel.onReloadCircuits()
             }
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+       val filter = when(item.itemId){
+            R.id.filter_ascending -> Filter.Ascending
+            else -> Filter.Descending
+        }
+        viewModel.filterItems(filter)
+        return super.onOptionsItemSelected(item)
+    }
+
 }

@@ -19,5 +19,4 @@ class F1Repository(private val localDataSource: LocalDataSource,
         }
         return localDataSource.getCircuits()
     }
-
 }

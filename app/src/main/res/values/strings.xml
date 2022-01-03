@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">SportsResults</string>
+
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
 </resources>

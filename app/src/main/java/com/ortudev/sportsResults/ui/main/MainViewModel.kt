@@ -1,4 +1,4 @@
-package com.ortudev.sportsResults.ui
+package com.ortudev.sportsResults.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,6 +19,8 @@ class MainViewModel(private val repository: F1Repository):ViewModel() {
     private val _circuits = MutableLiveData<List<Circuit>>()
     val circuits : LiveData<List<Circuit>> = _circuits
 
+    var filter:Filter = Filter.Ascending
+
     init {
         onReloadCircuits()
     }
@@ -26,9 +28,34 @@ class MainViewModel(private val repository: F1Repository):ViewModel() {
     fun onReloadCircuits(){
         viewModelScope.launch{
             _refreshing.value = true
-            _circuits.value = withContext(Dispatchers.IO){ GetCircuits(repository).invoke() }
+            getFilteredItems()
             _refreshing.value = false
         }
     }
+    private suspend fun getCircuits() = withContext(Dispatchers.IO){ GetCircuits(repository).invoke() }
+
+    private fun getFilteredItems(filter:Filter = this.filter){
+        viewModelScope.launch {
+            _circuits.value = getCircuits().apply {
+                filterItems(this,filter)
+            }
+
+        }
+    }
+
+    fun filterItems(filter: Filter){
+        this.filter=filter
+        _circuits.value = circuits.value?.let { list ->
+           filterItems(list,filter)
+        }
+    }
+    
+    private fun filterItems(list:List<Circuit>,filter:Filter):List<Circuit>{
+        return when(filter){
+            Filter.Ascending -> list.sortedBy { it.name }
+            Filter.Descending -> list.sortedByDescending { it.name }
+        }
+    }
+
 
 }

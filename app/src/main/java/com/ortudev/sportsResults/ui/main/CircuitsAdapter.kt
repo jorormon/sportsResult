@@ -1,4 +1,4 @@
-package com.ortudev.sportsResults.ui
+package com.ortudev.sportsResults.ui.main
 
 import android.annotation.SuppressLint
 import android.view.View
@@ -10,7 +10,6 @@ import com.ortudev.sportsResults.databinding.CircuitItemBinding
 import com.ortudev.sportsResults.inflate
 import com.ortudev.sportsResults.loadUrl
 import kotlin.properties.Delegates
-import kotlin.reflect.KProperty
 
 class CircuitsAdapter(items: List<Circuit> = emptyList()): RecyclerView.Adapter<CircuitsAdapter.ViewHolder>() {
 
