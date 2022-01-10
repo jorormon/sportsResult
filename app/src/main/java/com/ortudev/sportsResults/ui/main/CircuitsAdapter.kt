@@ -11,7 +11,7 @@ import com.ortudev.sportsResults.inflate
 import com.ortudev.sportsResults.loadUrl
 import kotlin.properties.Delegates
 
-class CircuitsAdapter(items: List<Circuit> = emptyList()): RecyclerView.Adapter<CircuitsAdapter.ViewHolder>() {
+class CircuitsAdapter(items: List<Circuit> = emptyList(),private val onClick:(circuit:Circuit)->Unit): RecyclerView.Adapter<CircuitsAdapter.ViewHolder>() {
 
     var items:List<Circuit> by Delegates.observable(items){_,_,_ ->
         notifyDataSetChanged()
@@ -25,6 +25,7 @@ class CircuitsAdapter(items: List<Circuit> = emptyList()): RecyclerView.Adapter<
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.bind(item)
+        holder.itemView.setOnClickListener { onClick(item) }
     }
 
     override fun getItemCount(): Int = items.size
@@ -35,7 +36,7 @@ class CircuitsAdapter(items: List<Circuit> = emptyList()): RecyclerView.Adapter<
         @SuppressLint("SetTextI18n")
         fun bind(circuit: Circuit){
             with(binding){
-                name.text = circuit.name + " (${circuit.location.country})"
+                name.text = circuit.name + circuit.location?.let {"(${it.country})"}
                 track.loadUrl(circuit.image)
             }
         }

@@ -19,4 +19,8 @@ class F1Repository(private val localDataSource: LocalDataSource,
         }
         return localDataSource.getCircuits()
     }
+
+    suspend fun getCircuitById(circuitId:Int):Circuit?{
+       return localDataSource.getCircuitById(circuitId)
+    }
 }

@@ -12,11 +12,11 @@ interface F1Dao {
     @Query("SELECT * FROM circuit")
     suspend fun getCircuits(): List<CircuitEntity>
 
-    //@Query("SELECT * FROM circuit where id=:circuitId")
-    //suspend fun getLocationByCircuit(circuitId:Int): LocationEntity
+    @Query("SELECT * FROM circuit where id=:circuitId")
+    suspend fun getCircuitById(circuitId:Int): CircuitEntity?
 
     @Query("SELECT * FROM location where id=:locationId")
-    suspend fun getLocation(locationId:Int): LocationEntity
+    suspend fun getLocation(locationId:Int): LocationEntity?
 
     @Query("SELECT COUNT(*) FROM circuit")
     suspend fun circuitsCount(): Int

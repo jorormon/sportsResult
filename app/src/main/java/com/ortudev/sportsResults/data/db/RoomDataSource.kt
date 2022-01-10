@@ -13,8 +13,7 @@ class  RoomDataSource(db:F1Database):LocalDataSource {
     override suspend fun getCircuits():List<Circuit> {
        val circuits = mutableListOf<Circuit>()
        f1Dao.getCircuits().forEach { entity->
-          val location = getLocation(entity.locationId)
-          entity.apply { circuits.add(Circuit(id, name, image, location, length)) }
+           getLocationFromCircuit(entity)?.let { circuits.add(it) }
        }
         return circuits
     }
@@ -24,8 +23,10 @@ class  RoomDataSource(db:F1Database):LocalDataSource {
 
     override suspend fun saveCircuits(list: List<Circuit>) {
         val listEntities: List<CircuitEntity> = list.map {
-            val locationId= saveLocation(it.location)
-            it.toRoomCircuit(locationId)
+            it.location?.let { location ->
+                val locationId = saveLocation(location)
+                it.toRoomCircuit(locationId)
+            }!!
         }
         return f1Dao.insertCircuits(listEntities)
     }
@@ -35,12 +36,20 @@ class  RoomDataSource(db:F1Database):LocalDataSource {
         return locat.toInt()
     }
 
-     suspend fun getLocationByCircuit(circuitId: Int) {
-     //  return f1Dao.getLocationByCircuit(circuitId).toLocation()
+    override suspend fun getCircuitById(circuitId: Int): Circuit? {
+      return f1Dao.getCircuitById(circuitId)?.let { circuit->
+          getLocationFromCircuit(circuit)
+      }
     }
 
-    override suspend fun getLocation(locationId: Int): Location {
-        return f1Dao.getLocation(locationId).toLocation()
+    private suspend fun getLocationFromCircuit(circuit: CircuitEntity): Circuit {
+       val location =  getLocation(circuit.locationId)
+        return Circuit(circuit.id, circuit.name, circuit.image, location, circuit.length)
+
+    }
+
+    override suspend fun getLocation(locationId: Int): Location? {
+        return f1Dao.getLocation(locationId)?.let{it.toLocation()}
     }
 
 

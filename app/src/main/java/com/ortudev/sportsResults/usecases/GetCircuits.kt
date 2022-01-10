@@ -8,4 +8,9 @@ class GetCircuits(private val repository:F1Repository) {
     suspend operator fun invoke():List<Circuit>{
        return repository.getCircuits().map(CircuitDB::toDomainCircuit)
     }
+
+    suspend fun byId(circuitId:Int): Circuit? {
+        return repository.getCircuitById(circuitId)?.toDomainCircuit()
+    }
+
 }

@@ -32,6 +32,7 @@ class MainViewModel(private val repository: F1Repository):ViewModel() {
             _refreshing.value = false
         }
     }
+
     private suspend fun getCircuits() = withContext(Dispatchers.IO){ GetCircuits(repository).invoke() }
 
     private fun getFilteredItems(filter:Filter = this.filter){
@@ -39,7 +40,6 @@ class MainViewModel(private val repository: F1Repository):ViewModel() {
             _circuits.value = getCircuits().apply {
                 filterItems(this,filter)
             }
-
         }
     }
 
@@ -49,7 +49,7 @@ class MainViewModel(private val repository: F1Repository):ViewModel() {
            filterItems(list,filter)
         }
     }
-    
+
     private fun filterItems(list:List<Circuit>,filter:Filter):List<Circuit>{
         return when(filter){
             Filter.Ascending -> list.sortedBy { it.name }

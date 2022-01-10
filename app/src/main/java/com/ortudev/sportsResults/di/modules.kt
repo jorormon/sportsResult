@@ -9,6 +9,7 @@ import com.ortudev.sportsResults.data.server.api.F1Api
 import com.ortudev.sportsResults.data.server.RemoteClient
 import com.ortudev.sportsResults.data.server.RemoteDataSource
 import com.ortudev.sportsResults.data.server.ServerDataSource
+import com.ortudev.sportsResults.ui.detail.DetailViewModel
 import com.ortudev.sportsResults.ui.main.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -25,6 +26,7 @@ val repositoryModule = module{
 }
 val viewModelModule = module {
     viewModel { MainViewModel(get()) }
+    viewModel { DetailViewModel(get()) }
 }
 
 fun provideRemoteDataSource(f1Api: F1Api):RemoteDataSource{

@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ortudev.sportsResults.R
 import com.ortudev.sportsResults.databinding.ActivityMainBinding
+import com.ortudev.sportsResults.startActivity
+import com.ortudev.sportsResults.ui.detail.DetailActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -14,14 +16,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModel()
     private val adapter: CircuitsAdapter by lazy {
-        CircuitsAdapter()
+        CircuitsAdapter(){
+            startActivity<DetailActivity>(DetailActivity.EXTRA_ID to it.id)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         supportActionBar?.title = "Circuits"
+
         with(binding){
             recycler.layoutManager = LinearLayoutManager(this@MainActivity)
             recycler.adapter = adapter
