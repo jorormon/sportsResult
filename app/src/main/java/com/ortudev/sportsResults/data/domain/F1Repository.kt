@@ -23,4 +23,9 @@ class F1Repository(private val localDataSource: LocalDataSource,
     suspend fun getCircuitById(circuitId:Int):Circuit?{
        return localDataSource.getCircuitById(circuitId)
     }
+
+    suspend fun getTeams(season:Season){
+        //getRankingTeams
+    }
 }
+

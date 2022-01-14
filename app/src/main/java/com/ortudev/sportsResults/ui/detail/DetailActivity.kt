@@ -1,5 +1,6 @@
 package com.ortudev.sportsResults.ui.detail
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.ortudev.sportsResults.R
@@ -27,6 +28,7 @@ class DetailActivity : AppCompatActivity() {
         viewModel.circuit.observe(this,::setInfoCircuit)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setInfoCircuit(circuit:Circuit){
         with(binding){
             circuit.location?.let{

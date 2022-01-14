@@ -9,7 +9,7 @@ data class Circuit(val id:Int, val name:String,val image:String,val location: Lo
         return Circuit(id,name,image,location?.toDomain(),length)
     }
 
-    fun toRoomCircuit(locationId:Int):CircuitEntity{
+    fun toRoomCircuit(locationId:Int?):CircuitEntity{
         return CircuitEntity(id,name,image,locationId,length)
     }
 }

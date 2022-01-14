@@ -11,6 +11,10 @@ data class CircuitEntity(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "image") val image: String,
-    @ColumnInfo(name = "location") val locationId: Int,
+    @ColumnInfo(name = "location") val locationId: Int?,
     @ColumnInfo(name = "length") val length: String
-)
+){
+    fun toDB(location:Location? = null):Circuit{
+        return Circuit(id, name, image, location, length)
+    }
+}
